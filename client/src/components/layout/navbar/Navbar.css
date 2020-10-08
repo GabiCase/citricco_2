@@ -1,0 +1,45 @@
+.cart-img {
+    width: 30px;
+}
+
+.payment-image {
+    width: 100px;
+}
+
+.container.bottom-20 {
+    margin-bottom: 20px;
+}
+
+.btn-image {
+    background-color: transparent;
+    border: 0;
+}
+
+.col-suggestion img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.suggestions-box {
+padding: 80px;
+justify-content: space-between;
+}
+
+.user-logo {
+    background-image: url('./images/user.png');
+    width: 30px;
+    height: 30px;
+    background-size: cover;
+    
+}
+.user-logo.transparent a {
+    color: transparent;
+}
+.user-logo.transparent a.dropdown-item {
+    color: black;
+}
+.earrings {
+    color: black;
+}
+
