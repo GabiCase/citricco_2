@@ -28,10 +28,6 @@ const productSchema = new Schema(
       type: [String],
       enum: ["", "aros", "colgantes"],
     },
-    ownwer: {
-      type: Schema.Types.ObjectId,
-      rel: "user",
-    },
     createdAt: {
       type: Date,
       default: Date.now,

@@ -16,6 +16,10 @@ const userSchema = new Schema(
       type: String,
       enum: ["customer", "admin"],
     },
+    fav: {
+      type: [Schema.Types.ObjectId],
+      rel: "product",
+    },
   },
   {
     timestamps: true,
