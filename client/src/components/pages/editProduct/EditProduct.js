@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import { Button, Form } from "react-bootstrap";
 
-import "./NewProduct.css";
+import "./EditProduct.css";
 
 import productService from "./../../../service/products.service";
 
 class EditProduct extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
-      name: "",
-      description: "",
-      price: "",
-      category: "",
-      image: "",
+      name: props.product.name,
+      description: props.product.description,
+      price: props.product.price,
+      category: props.product.category,
+      image: props.product.image,
     };
     this.productService = new productService();
   }
@@ -26,7 +26,7 @@ class EditProduct extends Component {
   handleFormSubmit = (e) => {
     e.preventDefault();
     this.productService
-      .editProduct(this.state)
+      .editProduct(this.props.product._id, this.state)
       .then(() => {
         this.props.closeModal();
         this.props.refreshList();
@@ -94,7 +94,7 @@ class EditProduct extends Component {
                 <option value="colgantes">Colgantes</option>
               </Form.Control>
             </Form.Group>
-            <Button type="submit">Create product</Button>
+            <Button type="submit">Save changes</Button>
           </Form>
         </div>
       </>

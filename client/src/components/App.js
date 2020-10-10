@@ -16,6 +16,8 @@ import Profile from "./pages/profile/Profile";
 import Cart from "./layout/navbar/Cart";
 
 import authService from "./../service/auth.service";
+import PendantList from "./pages/productList/PendantList";
+import HoopList from "./pages/productList/HoopList";
 
 class App extends Component {
   constructor() {
@@ -108,7 +110,6 @@ class App extends Component {
         <Navigation
           cart={this.state.cart}
           cartChanged={this.cartChanged}
-          setTheUser={this.setTheUser}
           loggedInUser={this.state.loggedInUser}
         />
         <Switch>
@@ -118,7 +119,6 @@ class App extends Component {
             render={() => (
               <ProductsList
                 addToCart={this.addToCart}
-                setTheUser={this.setTheUser}
                 loggedInUser={this.state.loggedInUser}
               />
             )}
@@ -127,8 +127,8 @@ class App extends Component {
             path="/products/details/:product_id"
             render={(props) => (
               <ProductDetails
-                setTheUser={this.setTheUser}
                 {...props}
+                loggedInUser={this.state.loggedInUser}
                 quantity={this.state.quantity}
                 decrease={this.decrease}
                 increase={this.increase}
@@ -160,6 +160,14 @@ class App extends Component {
                 <Redirect to="/account/login" />
               )
             }
+          />
+          <Route
+            path="/products/pendants"
+            render={(props) => <PendantList {...props} />}
+          />
+          <Route
+            path="/products/hoops"
+            render={(props) => <HoopList {...props} />}
           />
           <Route
             path="/cart"

@@ -75,13 +75,13 @@ export default class extends Component {
                 className="earrings"
               >
                 <NavDropdown.Item>
-                  <Link className="dropdown-item" to="/">
+                  <Link to="/products/hoops" className="dropdown-item">
                     Aros
                   </Link>
                 </NavDropdown.Item>
 
                 <NavDropdown.Item>
-                  <Link className="dropdown-item" to="/">
+                  <Link to="/products/pendants" className="dropdown-item">
                     Colgantes
                   </Link>
                 </NavDropdown.Item>

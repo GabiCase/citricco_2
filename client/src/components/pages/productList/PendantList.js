@@ -10,11 +10,10 @@ import "./ProductList.css";
 import productsService from "../../../service/products.service";
 import ProductCard from "./ProductCard";
 import NewProduct from "../newProduct/NewProduct";
-//import Wishlist from "../Wishlist";
 
 import Spinner from "./../../shared/spinner/Spinner";
 
-class ProductsList extends Component {
+class PendantList extends Component {
   constructor(props) {
     super();
     this.state = {
@@ -24,20 +23,13 @@ class ProductsList extends Component {
     this.productsService = new productsService();
   }
 
-  // receiveIdRemove = (receivedId) => {
-  //   this.setState({ favProdId: receivedId }, () => this.removeFromFav());
-  // };
-  // receiveIdAdd = (receivedId) => {
-  //   this.setState({ favProdId: receivedId }, () => this.addToFav());
-  // };
-
   componentDidMount = () => {
     this.loadProducts();
   };
   loadProducts = () => {
     console.log("estoy refrescando");
     this.productsService
-      .getAllProducts()
+      .getCategory()
       .then((response) => this.setState({ products: response.data }))
       .catch((err) => console.log("ERROR", err));
   };
@@ -57,7 +49,7 @@ class ProductsList extends Component {
           )}
 
           <main>
-            <h1> All products</h1>
+            <h1> Pendants</h1>
             <Row>
               {this.state.products.length ? (
                 this.state.products.map((elm) => (
@@ -98,4 +90,4 @@ class ProductsList extends Component {
   }
 }
 
-export default ProductsList;
+export default PendantList;

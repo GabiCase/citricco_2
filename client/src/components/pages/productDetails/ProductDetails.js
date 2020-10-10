@@ -6,23 +6,38 @@ import productService from "./../../../service/products.service";
 
 import Counter from "./../../shared/counter/Counter";
 
+import EditProduct from "../editProduct/EditProduct";
+
 class ProductDetails extends Component {
   constructor(props) {
     super();
     this.state = {
       product: undefined,
+      showModalEdit: false,
 
       //aquí está llegando
     };
     this.productService = new productService();
   }
 
-  componentDidMount() {
+  handleModalEdit = (showModalEdit) => this.setState({ showModalEdit });
+
+  componentDidMount = () => this.loadProducts();
+
+  delete = () => {
+    this.productService
+      .deleteProduct(this.props.match.params.product_id)
+      .then(() => this.props.history.push("/products/all"))
+      .catch((err) => console.log(err));
+  };
+
+  loadProducts = () => {
     this.productService
       .getOneProduct(this.props.match.params.product_id)
       .then((res) => this.setState({ product: res.data }))
+
       .catch((err) => console.log(err));
-  }
+  };
 
   render() {
     return (
@@ -55,6 +70,21 @@ class ProductDetails extends Component {
 
                       <Button>Add to cart</Button>
                       <Button>Add to wishlist</Button>
+                      {this.props.loggedInUser &&
+                        this.props.loggedInUser.role === "admin" && (
+                          <Button
+                            onClick={() => this.handleModalEdit(true)}
+                            size="sm"
+                          >
+                            Edit product
+                          </Button>
+                        )}
+                      {this.props.loggedInUser &&
+                        this.props.loggedInUser.role === "admin" && (
+                          <Button onClick={this.delete} size="sm">
+                            Delete product
+                          </Button>
+                        )}
                     </div>
                   </Col>
                 </Row>
@@ -68,7 +98,8 @@ class ProductDetails extends Component {
                 <Modal.Title>Edit product</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <NewProduct
+                <EditProduct
+                  product={this.state.product}
                   closeModal={() => this.handleModalEdit(false)}
                   refreshList={this.loadProducts}
                 />

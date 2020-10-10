@@ -22,6 +22,13 @@ router.get("/getOneProduct/:product_id", (req, res) => {
     .then((response) => res.json(response))
     .catch((err) => res.status(500).json(err));
 });
+
+router.put("/deleteProduct/:product_id", (req, res) => {
+  Product.findByIdAndDelete(req.params.product_id)
+    .then((response) => res.json(response))
+    .catch((err) => res.status(500).json(err));
+});
+
 router.post("/newProduct", (req, res) => {
   Product.create(req.body)
     .then((response) => res.json(response))
@@ -29,6 +36,7 @@ router.post("/newProduct", (req, res) => {
 });
 
 router.put("/editProduct/:product_id", (req, res) => {
+  console.log(req.params.product_id);
   if (!mongoose.Types.ObjectId.isValid(req.params.product_id)) {
     res.status(400).json({ message: "Specified id is not valid" });
     return;
@@ -38,11 +46,30 @@ router.put("/editProduct/:product_id", (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-router.put("/wishlist/:user_id", (req, res) => {
-  console.log(req.body.favId);
+router.put("/fav/:user_id", (req, res) => {
+  console.log("user id de fav", req.params.user_id);
+  console.log("product id de fav", req.body);
   User.findByIdAndUpdate(req.params.user_id, {
-    $push: { fav: req.body.favId },
-  });
+    $push: { fav: req.body },
+  })
+    .then((response) => res.json(response))
+    .catch((err) => res.status(500).json(err));
+});
+
+router.put("/unfav/:user_id", (req, res) => {
+  console.log("user id de unfav", req.params.user_id);
+  console.log("product id de unfav", req.body);
+  User.findByIdAndUpdate(req.params.user_id, {
+    $pull: { fav: req.body },
+  })
+    .then((response) => res.json(response))
+    .catch((err) => res.status(500).json(err));
+});
+
+router.get("/category/:cat_name", (req, res) => {
+  Product.find({ category: req.params.cat_name })
+    .then((response) => res.json(response))
+    .catch((err) => res.status(500).json(err));
 });
 
 // router.put("/wishlist/:user_id", (req, res) => {
